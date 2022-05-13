@@ -1,3 +1,14 @@
 body {
     font-family: 'Nunito', sans-serif;
 }
+.login-container {
+    display: grid;
+    place-items: center;
+    min-height: 50vh;
+}
+.login-form {
+    width: 420px;
+    max-width: 480px;
+    min-width: 320px;
+    margin: 0 auto;
+}

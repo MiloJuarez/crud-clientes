@@ -18,15 +18,19 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             @endif
-            <div class="dropdown open ms-2">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Mi cuenta
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId">
-                    <button class="dropdown-item" href="#">Iniciar sesión</button>
+            @if (Auth::check())
+                <div class="dropdown open ms-2">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Mi cuenta
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="triggerId">
+                        <p class="dropdown-item text-dark">{{ Auth::user()->name }}</p>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('logout') }}" class="dropdown-item" id="logout">Cerrar sesion</a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </nav>

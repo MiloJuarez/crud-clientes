@@ -22,9 +22,11 @@
 </head>
 
 <body class="container-fluid bg-dark">
-    <header class="p-4">
-        @include('components.navbar')
-    </header>
+    @if (!isset($hideNavbar))
+        <header class="p-4">
+            @include('components.navbar')
+        </header>
+    @endif
     <div class="pages-container">
         @yield('pages')
         <div>
@@ -32,6 +34,7 @@
         </div>
     </div>
     <div>
+        <script src="{{ asset('/js/login.js') }}" type="module"></script>
         @yield('scripts')
     </div>
 </body>

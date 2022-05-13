@@ -6,6 +6,7 @@ class HTTPHeaders {
                 "Content-Type": "multipart/form-data",
             },
             "X-CSRF-TOKEN": token,
+            Authorization: "Bearer " + token,
         };
 
         return headers;

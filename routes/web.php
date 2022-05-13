@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ClienteController::class, 'index']);
-Route::resource('clientes', ClienteController::class);
+Route::middleware('auth')->group(function () {
+    Route::get('/', [ClienteController::class, 'index']);
+    Route::resource('clientes', ClienteController::class)->middleware('auth');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+});
+Route::get('login', [LoginController::class, 'login'])->name('login');
+Route::post('authenticate', [LoginController::class, 'authenticate']);
