@@ -132,7 +132,11 @@ class ClienteController extends Controller
 
     public function validateRequest(Request $request, $cliente = null)
     {
-        $uniqueEmail = $request->correo == $cliente->correo ? '' : '|unique:clientes,correo';
+        $uniqueEmail = '|unique:clientes,correo';
+        if ($cliente && $request->correo == $cliente->correo) {
+            $uniqueEmail = '';
+        }
+
         $validator = Validator::make($request->all(), [
             'nombres' => 'required|string|max:100',
             'apellido_paterno' => 'required|string|max:80',
