@@ -19,4 +19,9 @@ class Cliente extends Model
         'domicilio',
         'email',
     ];
+
+    public function getNombreCompletoAttribute()
+    {
+        return $this->nombres . ' ' . $this->apellido_paterno . ' ' . $this->apellido_materno;
+    }
 }
