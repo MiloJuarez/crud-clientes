@@ -125,9 +125,17 @@ class ClienteController extends Controller
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy(int $id)
     {
-        //
+        $cliente = Cliente::find($id);
+        if ($cliente) {
+            $cliente->delete();
+            return response()->json([
+                'message' => 'Cliente eliminado correctamente',
+            ], Response::HTTP_NO_CONTENT);
+        }
+
+        abort(Response::HTTP_NOT_FOUND);
     }
 
     public function validateRequest(Request $request, $cliente = null)

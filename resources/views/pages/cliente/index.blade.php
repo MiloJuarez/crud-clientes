@@ -28,7 +28,10 @@
                             <td>{{ $cliente->correo }}</td>
                             <td>
                                 <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-secondary">Editar</a>
-                                <button class="btn btn-danger">Eliminar</button>
+                                <button type="button" class="btn btn-danger btnEliminar" data-bs-toggle="modal"
+                                    data-bs-target="#modelId" data-identifier="{{ $cliente->id }}">
+                                    Eliminar
+                                </button>
                             </td>
                         </tr>
                         @php
@@ -46,4 +49,10 @@
 
         </div>
     </div>
+@endsection
+@section('modals')
+    @include('components.confirmDelete')
+@endsection
+@section('scripts')
+    <script src="{{ asset('/js/index.js') }}" type="module"></script>
 @endsection

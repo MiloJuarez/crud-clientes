@@ -32,6 +32,16 @@ class Messages {
 
         return errorMessage;
     }
+
+    static getSimpleErrorMessage(message) {
+        let simpleErrorMessage = `
+        <div class="alert alert-warning" role="alert">
+            <strong>Éxito!</strong> ${message}
+        </div>
+        `;
+
+        return simpleErrorMessage;
+    }
 }
 
 export default Messages;

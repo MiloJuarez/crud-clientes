@@ -27,6 +27,9 @@
     </header>
     <div class="pages-container">
         @yield('pages')
+        <div>
+            @yield('modals')
+        </div>
     </div>
     <div>
         @yield('scripts')

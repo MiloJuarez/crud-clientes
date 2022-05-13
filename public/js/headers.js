@@ -22,6 +22,17 @@ class HTTPHeaders {
 
         return headers;
     }
+
+    static deleteHeaders(token) {
+        let headers = {
+            headers: {
+                Accept: "application/json",
+            },
+            "X-CSRF-TOKEN": token,
+        };
+
+        return headers;
+    }
 }
 
 export default HTTPHeaders;
