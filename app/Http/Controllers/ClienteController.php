@@ -14,10 +14,19 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::all();
-        return view('pages.cliente.index', compact('clientes'));
+        $search = "";
+        $clientes = collect([]);
+
+        if ($request->has('search') && empty($request->search) == false) {
+            $search = $request->search;
+            $clientes = Cliente::where('nombres', 'like', "%{$search}%")
+                ->orWhere('apellido_paterno', 'like', "%{$search}%")->orWhere('apellido_materno', 'like', "%{$search}%")->get();
+        } else {
+            $clientes = Cliente::all();
+        }
+        return view('pages.cliente.index', compact('clientes', 'search'));
     }
 
     /**
