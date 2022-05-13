@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
@@ -37,7 +39,25 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $this->validateRequest($request);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Error al guardar el cliente',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $cliente = new Cliente();
+        $cliente->nombres = $request->nombres;
+        $cliente->apellido_paterno = $request->apellido_paterno;
+        $cliente->apellido_materno = $request->apellido_materno;
+        $cliente->domicilio = $request->domicilio;
+        $cliente->correo = $request->correo;
+        $cliente->save();
+
+        return response()->json([
+            'message' => 'Cliente registrado correctamente',
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -83,5 +103,18 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+    }
+
+    public function validateRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nombres' => 'required|string|max:100',
+            'apellido_paterno' => 'required|string|max:80',
+            'apellido_materno' => 'required|string|max:80',
+            'domicilio' => 'required|string|max:255',
+            'correo' => 'required|string|email|max:100|unique:clientes,correo',
+        ]);
+
+        return $validator;
     }
 }

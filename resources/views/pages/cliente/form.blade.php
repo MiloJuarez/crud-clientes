@@ -19,6 +19,12 @@
         </div>
     </div>
 
+    <div class="mb-3 col">
+        <label for="domicilio" class="form-label">Domicilio</label>
+        <input type="text" name="domicilio" id="domicilio" class="form-control" placeholder="Eje. Conocido"
+            aria-describedby="helpId">
+    </div>
+
     <div class="mb-3">
         <label for="correo" class="form-label">Correo</label>
         <input type="email" name="correo" id="correo" class="form-control" placeholder="ejemplo@ejemplo.com"
