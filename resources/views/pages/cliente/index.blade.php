@@ -27,7 +27,7 @@
                             <td>{{ $cliente->domicilio }}</td>
                             <td>{{ $cliente->correo }}</td>
                             <td>
-                                <a href="#">Editar</a>
+                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-secondary">Editar</a>
                                 <button class="btn btn-danger">Eliminar</button>
                             </td>
                         </tr>

@@ -36,3 +36,28 @@ $("#btnRegistrar").click(function (e) {
         },
     });
 });
+
+$("#btnEditar").click(function (e) {
+    e.preventDefault();
+
+    let formData = getFormData();
+    const token = $("meta[name='csrf-token']").attr("content");
+    const identifier = $("#identifier").val();
+
+    $.ajax({
+        url: "/clientes/" + Number.parseInt(identifier),
+        method: "PUT",
+        headers: HTTPHeaders.putHeaders(token),
+        data: formData,
+        dataType: "json",
+        success: function (response) {
+            $("#messages").html(Messages.getSuccessMessage(response.message));
+            setTimeout(() => {
+                window.location = "/clientes";
+            }, 2000);
+        },
+        error: function (response) {
+            $("#messages").html(Messages.getErrorMessage(response));
+        },
+    });
+});
