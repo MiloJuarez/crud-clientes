@@ -25,7 +25,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        $hideSF = true;
+        return view('pages.cliente.create', compact('hideSF'));
     }
 
     /**

@@ -12,10 +12,12 @@
                     <a class="nav-link" href="#">Inicio <span class="visually-hidden">(current)</span></a>
                 </li>
             </ul>
-            <form class="d-flex my-2 my-lg-0">
-                <input class="form-control me-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            @if (isset($hideSF) == false)
+                <form class="d-flex my-2 my-lg-0">
+                    <input class="form-control me-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            @endif
             <div class="dropdown open ms-2">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">

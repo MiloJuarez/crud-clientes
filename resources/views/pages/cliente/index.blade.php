@@ -3,7 +3,7 @@
     <div class="container-md">
         <h2>Clientes</h2>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary">Registrar</button>
+            <a href="{{ route('clientes.create') }}" class="btn btn-primary">Registrar</a>
         </div>
         <div>
             <table class="table table-hover table-inverse table-responsive text-white">
