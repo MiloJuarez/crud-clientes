@@ -22,20 +22,14 @@ $(".editar").click(function (e) {
     $.ajax({
         url: "clientes/" + identifier,
         method: "GET",
-        headers: HTTPHeaders.deleteHeaders(token),
+        headers: HTTPHeaders.postHeaders(token),
         dataType: "json",
         success: function (response) {
-            if (response.cliente) {
-                $("input[name='nombres']").val(response.cliente.nombres);
-                $("input[name='apellido_paterno']").val(response.cliente.apellido_paterno);
-                $("input[name='apellido_materno']").val(response.cliente.apellido_materno);
-                $("input[name='domicilio']").val(response.cliente.domicilio);
-                $("input[name='correo']").val(response.cliente.correo);
-            } else {
-                $("#frm-messages").html(
-                    Messages.getSuccessMessage(response.message)
-                );
-            }
+            $("input[name='nombres']").val(response.cliente.nombres);
+            $("input[name='apellido_paterno']").val(response.cliente.apellido_paterno);
+            $("input[name='apellido_materno']").val(response.cliente.apellido_materno);
+            $("input[name='domicilio']").val(response.cliente.domicilio);
+            $("input[name='correo']").val(response.cliente.email);
         },
         error: function (response) {
             $("#frm-messages").html(Messages.getErrorMessage(response));
@@ -64,7 +58,7 @@ $("#frmSubmit").click(function (e) {
     $.ajax({
         url: "clientes/" + identifier,
         method: "POST",
-        headers: HTTPHeaders.deleteHeaders(token),
+        headers: HTTPHeaders.postHeaders(token),
         dataType: "json",
         data: data,
         success: function (response) {

@@ -38,10 +38,6 @@ class ClienteController extends Controller
      */
     public function get(Request $request, int $id)
     {
-        if (!$request->isJson()) {
-            return redirect('/');
-        }
-
         $cliente = Cliente::find($id);
         if ($cliente) {
             return response()->json([
@@ -88,7 +84,7 @@ class ClienteController extends Controller
             "apellido_paterno" => $request->apellido_paterno,
             "apellido_materno" => $request->apellido_materno,
             "domicilio" => $request->domicilio,
-            "correo" => $request->correo,
+            "email" => $request->correo,
         ]);
 
         return response()->json([
@@ -120,7 +116,7 @@ class ClienteController extends Controller
 
     public function validateRequest(Request $request, $cliente = null)
     {
-        $uniqueEmail = '|unique:clientes,correo';
+        $uniqueEmail = '|unique:clientes,email';
         if ($cliente && $request->correo == $cliente->correo) {
             $uniqueEmail = '';
         }
