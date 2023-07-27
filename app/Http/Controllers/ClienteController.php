@@ -117,7 +117,7 @@ class ClienteController extends Controller
     public function validateRequest(Request $request, $cliente = null)
     {
         $uniqueEmail = '|unique:clientes,email';
-        if ($cliente && $request->correo == $cliente->correo) {
+        if ($cliente && $request->correo == $cliente->email) {
             $uniqueEmail = '';
         }
 
