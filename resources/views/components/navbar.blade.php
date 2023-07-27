@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Inicio <span class="visually-hidden">(current)</span></a>
+                    <a class="nav-link" href="/clientes">Clientes <span class="visually-hidden">(current)</span></a>
                 </li>
             </ul>
             @if (isset($hideSF) == false)

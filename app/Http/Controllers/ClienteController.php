@@ -30,102 +30,70 @@ class ClienteController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get client resource
      *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param integer $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function get(Request $request, int $id)
     {
-        $hideSF = true;
-        return view('pages.cliente.create', compact('hideSF'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $validator = $this->validateRequest($request);
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Error al guardar el cliente',
-                'errors' => $validator->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        if (!$request->isJson()) {
+            return redirect('/');
         }
 
-        $cliente = new Cliente();
-        $cliente->nombres = $request->nombres;
-        $cliente->apellido_paterno = $request->apellido_paterno;
-        $cliente->apellido_materno = $request->apellido_materno;
-        $cliente->domicilio = $request->domicilio;
-        $cliente->correo = $request->correo;
-        $cliente->save();
-
-        return response()->json([
-            'message' => 'Cliente registrado correctamente',
-        ], Response::HTTP_CREATED);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cliente $cliente)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(int $id)
-    {
         $cliente = Cliente::find($id);
         if ($cliente) {
-            $hideSF = true;
-            return view('pages.cliente.edit', compact('cliente', 'hideSF'));
+            return response()->json([
+                'cliente' => $cliente
+            ], Response::HTTP_OK);
         }
 
-        abort(Response::HTTP_NOT_FOUND);
+        return response()->json([
+            'cliente' => null,
+            'message' => 'Cliente no encontrado'
+        ], Response::HTTP_NOT_FOUND);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, int $id)
+    public function storeUpdate(Request $request, $id = null)
     {
         $cliente = Cliente::find($id);
+        $action = "guardar";
+        $success = "registrado";
+
         if ($cliente) {
-            $validator = $this->validateRequest($request, $cliente);
-            if ($validator->fails()) {
-                return response()->json([
-                    'message' => 'Error al actualizar el cliente',
-                    'errors' => $validator->errors()
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            $cliente->nombres = $request->nombres;
-            $cliente->apellido_paterno = $request->apellido_paterno;
-            $cliente->apellido_materno = $request->apellido_materno;
-            $cliente->domicilio = $request->domicilio;
-            $cliente->correo = $request->correo;
-            $cliente->save();
-
-            return response()->json([
-                'message' => 'Cliente actualizado correctamente',
-            ], Response::HTTP_OK);
+            $action = "modificar";
+            $success = "modificado";
         }
-        abort(Response::HTTP_NOT_FOUND);
+
+        $validator = $this->validateRequest($request, $cliente);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Error al ' . $action . ' el cliente',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $cliente = Cliente::updateOrCreate([
+            'id' => $id
+        ], [
+            "nombres" => $request->nombres,
+            "apellido_paterno" => $request->apellido_paterno,
+            "apellido_materno" => $request->apellido_materno,
+            "domicilio" => $request->domicilio,
+            "correo" => $request->correo,
+        ]);
+
+        return response()->json([
+            'message' => 'Cliente ' . $success . ' correctamente',
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -144,7 +112,10 @@ class ClienteController extends Controller
             ], Response::HTTP_NO_CONTENT);
         }
 
-        abort(Response::HTTP_NOT_FOUND);
+        return response()->json([
+            'message' => 'Cliente inválido',
+            'errors' => ['Cliente no encontrado']
+        ], Response::HTTP_NOT_FOUND);
     }
 
     public function validateRequest(Request $request, $cliente = null)

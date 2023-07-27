@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [ClienteController::class, 'index']);
-    Route::resource('clientes', ClienteController::class)->middleware('auth');
+    Route::get('clientes', [ClienteController::class, 'index']);
+    Route::get('clientes/{id}', [ClienteController::class, 'get']);
+    Route::post('clientes/{id?}', [ClienteController::class, 'storeUpdate']);
+    Route::delete('clientes/{id}', [ClienteController::class, 'destroy']);
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 Route::get('login', [LoginController::class, 'login'])->name('login');

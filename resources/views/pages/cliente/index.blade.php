@@ -3,7 +3,8 @@
     <div class="container-md">
         <h2>Clientes</h2>
         <div class="d-flex justify-content-end">
-            <a href="{{ route('clientes.create') }}" class="btn btn-primary">Registrar</a>
+            <button type="button" class="btn btn-primary agregar" data-bs-toggle="modal"
+                data-bs-target="#frmModal">Registrar</button>
         </div>
         <div>
             <table class="table table-hover table-inverse table-responsive text-white">
@@ -27,7 +28,8 @@
                             <td>{{ $cliente->domicilio }}</td>
                             <td>{{ $cliente->correo }}</td>
                             <td>
-                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-secondary">Editar</a>
+                                <button type="button" class="btn btn-secondary editar" data-bs-toggle="modal"
+                                    data-bs-target="#frmModal" data-identifier="{{ $cliente->id }}">Editar</button>
                                 <button type="button" class="btn btn-danger btnEliminar" data-bs-toggle="modal"
                                     data-bs-target="#modelId" data-identifier="{{ $cliente->id }}">
                                     Eliminar
@@ -52,6 +54,7 @@
 @endsection
 @section('modals')
     @include('components.confirmDelete')
+    @include('pages.cliente.frmModal')
 @endsection
 @section('scripts')
     <script src="{{ asset('/js/index.js') }}" type="module"></script>
