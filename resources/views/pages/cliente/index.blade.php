@@ -26,7 +26,7 @@
                             <td>{{ $count }}</td>
                             <td scope="row">{{ $cliente->nombre_completo }}</td>
                             <td>{{ $cliente->domicilio }}</td>
-                            <td>{{ $cliente->correo }}</td>
+                            <td>{{ $cliente->email }}</td>
                             <td>
                                 <button type="button" class="btn btn-secondary editar" data-bs-toggle="modal"
                                     data-bs-target="#frmModal" data-identifier="{{ $cliente->id }}">Editar</button>
